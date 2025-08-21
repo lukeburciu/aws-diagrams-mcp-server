@@ -69,6 +69,7 @@ class DiagramGenerateResponse(BaseModel):
 
     status: Literal['success', 'error']
     path: Optional[str] = None
+    dot_path: Optional[str] = None
     message: str
 
 

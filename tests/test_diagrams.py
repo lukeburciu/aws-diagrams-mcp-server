@@ -215,6 +215,15 @@ class TestGenerateDiagram:
         )
         assert result.path == expected_path
 
+        # Check that the DOT file was also generated
+        assert result.dot_path is not None
+        assert os.path.exists(result.dot_path)
+        assert result.dot_path.endswith('.dot')
+        expected_dot_path = os.path.join(
+            temp_workspace_dir, 'generated-diagrams', 'test_aws_diagram.dot'
+        )
+        assert result.dot_path == expected_dot_path
+
     @pytest.mark.asyncio
     async def test_generate_diagram_with_absolute_path(self, aws_diagram_code, temp_workspace_dir):
         """Test diagram generation with an absolute path."""
