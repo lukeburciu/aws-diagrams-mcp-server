@@ -289,6 +289,12 @@ from diagrams.aws.enduser import *
                         new_args += ', '
                     new_args += 'show=False'
 
+                # Add outformat to generate both PNG and DOT
+                if 'outformat=' not in new_args:
+                    if new_args and not new_args.endswith(','):
+                        new_args += ', '
+                    new_args += "outformat=['png', 'dot']"
+
                 # Replace in the code
                 code = code.replace(f'with Diagram({original_args})', f'with Diagram({new_args})')
 
@@ -307,13 +313,20 @@ from diagrams.aws.enduser import *
         # Cancel the alarm
         signal.alarm(0)
 
-        # Check if the file was created
+        # Check if the PNG file was created
         png_path = f'{output_path}.png'
+        dot_path = f'{output_path}.dot'
+
         if os.path.exists(png_path):
+            # Check if DOT file was also created (diagrams package generates both by default)
+            dot_exists = os.path.exists(dot_path)
+
             response = DiagramGenerateResponse(
                 status='success',
                 path=png_path,
-                message=f'Diagram generated successfully at {png_path}',
+                dot_path=dot_path if dot_exists else None,
+                message=f'Diagram generated successfully at {png_path}'
+                + (f' and {dot_path}' if dot_exists else ''),
             )
 
             return response
