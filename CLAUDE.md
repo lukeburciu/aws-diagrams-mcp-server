@@ -22,7 +22,7 @@ pytest -xvs tests/
 pytest -xvs tests/test_models.py
 
 # Run with coverage report
-pytest --cov=lukeburciu.aws_diagram_mcp_server --cov-report=term-missing tests/
+pytest --cov=aws_diagram_mcp_server --cov-report=term-missing tests/
 
 # Run specific test class or method
 pytest -xvs tests/test_models.py::TestDiagramType
@@ -39,16 +39,16 @@ ruff format .
 pyright
 
 # Run security scanner
-bandit -c pyproject.toml -r lukeburciu/
+bandit -c pyproject.toml -r aws_diagram_mcp_server/
 ```
 
 ### Building
 ```bash
 # Build Docker image
-docker build -t lukeburciu/aws-diagram-mcp-server .
+docker build -t aws-diagram-mcp-server .
 
 # Run Docker container
-docker run --rm --interactive --env FASTMCP_LOG_LEVEL=ERROR lukeburciu/aws-diagram-mcp-server:latest
+docker run --rm --interactive --env FASTMCP_LOG_LEVEL=ERROR aws-diagram-mcp-server:latest
 ```
 
 ## Architecture

@@ -19,8 +19,8 @@
 import os
 import pytest
 import tempfile
-from lukeburciu.aws_diagram_mcp_server.models import DiagramType
-from lukeburciu.aws_diagram_mcp_server.server import (
+from aws_diagram_mcp_server.models import DiagramType
+from aws_diagram_mcp_server.server import (
     mcp_generate_diagram,
     mcp_get_diagram_examples,
     mcp_list_diagram_icons,
@@ -32,7 +32,7 @@ class TestMcpGenerateDiagram:
     """Tests for the mcp_generate_diagram function."""
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.generate_diagram')
+    @patch('aws_diagram_mcp_server.server.generate_diagram')
     async def test_generate_diagram(self, mock_generate_diagram):
         """Test the mcp_generate_diagram function."""
         # Set up the mock
@@ -70,7 +70,7 @@ class TestMcpGenerateDiagram:
         )
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.generate_diagram')
+    @patch('aws_diagram_mcp_server.server.generate_diagram')
     async def test_generate_diagram_with_defaults(self, mock_generate_diagram):
         """Test the mcp_generate_diagram function with default values."""
         # Set up the mock
@@ -100,7 +100,7 @@ class TestMcpGenerateDiagram:
         # This is because we're using a special case in mcp_generate_diagram to handle this test
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.generate_diagram')
+    @patch('aws_diagram_mcp_server.server.generate_diagram')
     async def test_generate_diagram_error(self, mock_generate_diagram):
         """Test the mcp_generate_diagram function with an error."""
         # Set up the mock
@@ -131,7 +131,7 @@ class TestMcpGetDiagramExamples:
     """Tests for the mcp_get_diagram_examples function."""
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.get_diagram_examples')
+    @patch('aws_diagram_mcp_server.server.get_diagram_examples')
     async def test_get_diagram_examples(self, mock_get_diagram_examples):
         """Test the mcp_get_diagram_examples function."""
         # Set up the mock
@@ -161,7 +161,7 @@ class TestMcpGetDiagramExamples:
         mock_get_diagram_examples.assert_called_once_with(DiagramType.ALL)
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.get_diagram_examples')
+    @patch('aws_diagram_mcp_server.server.get_diagram_examples')
     async def test_get_diagram_examples_with_specific_type(self, mock_get_diagram_examples):
         """Test the mcp_get_diagram_examples function with a specific diagram type."""
         # Set up the mock
@@ -193,7 +193,7 @@ class TestMcpListDiagramIcons:
     """Tests for the mcp_list_diagram_icons function."""
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.list_diagram_icons')
+    @patch('aws_diagram_mcp_server.server.list_diagram_icons')
     async def test_list_diagram_icons_without_filters(self, mock_list_diagram_icons):
         """Test the mcp_list_diagram_icons function without filters."""
         # Set up the mock
@@ -230,7 +230,7 @@ class TestMcpListDiagramIcons:
         # We don't check the exact arguments because they are Field objects
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.list_diagram_icons')
+    @patch('aws_diagram_mcp_server.server.list_diagram_icons')
     async def test_list_diagram_icons_with_provider_filter(self, mock_list_diagram_icons):
         """Test the mcp_list_diagram_icons function with provider filter."""
         # Set up the mock
@@ -272,7 +272,7 @@ class TestMcpListDiagramIcons:
         assert args[0] == 'aws'
 
     @pytest.mark.asyncio
-    @patch('lukeburciu.aws_diagram_mcp_server.server.list_diagram_icons')
+    @patch('aws_diagram_mcp_server.server.list_diagram_icons')
     async def test_list_diagram_icons_with_provider_and_service_filter(
         self, mock_list_diagram_icons
     ):

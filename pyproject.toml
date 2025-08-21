@@ -1,5 +1,5 @@
 [project]
-name = "lukeburciu.aws-diagram-mcp-server"
+name = "aws-diagram-mcp-server"
 version = "1.0.7"
 description = "An MCP server that seamlessly creates diagrams using the Python diagrams package DSL"
 readme = "README.md"
@@ -19,7 +19,8 @@ license = {text = "Apache-2.0"}
 license-files = ["LICENSE", "NOTICE" ]
 
 authors = [
-    {name = "Luke Burciu"},
+    {name = "Amazon Web Services"},
+    {name = "AWSLabs MCP", email="203918161+awslabs-mcp@users.noreply.github.com"},
 ]
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
@@ -33,11 +34,14 @@ classifiers = [
 ]
 
 [project.scripts]
-"lukeburciu.aws-diagram-mcp-server" = "lukeburciu.aws_diagram_mcp_server.server:main"
+"aws-diagram-mcp-server" = "aws_diagram_mcp_server.server:main"
 
 [project.urls]
-Source = "https://github.com/lukeburciu/aws-diagram-mcp-server.git"
-"Bug Tracker" = "https://github.com/lukeburciu/aws-diagram-mcp-server/issues"
+Homepage = "https://awslabs.github.io/mcp/"
+Documentation = "https://awslabs.github.io/mcp/servers/aws-diagram-mcp-server/"
+Source = "https://github.com/awslabs/mcp.git"
+"Bug Tracker" = "https://github.com/awslabs/mcp/issues"
+Changelog = "https://github.com/awslabs/mcp/blob/main/src/aws-diagram-mcp-server/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
@@ -96,7 +100,7 @@ line-ending = "auto"
 docstring-code-format = true
 
 [tool.pyright]
-include = ["lukeburciu", "tests"]
+include = ["aws_diagram_mcp_server", "tests"]
 exclude = ["**/__pycache__", "**/.venv", "**/node_modules", "**/dist", "**/build"]
 typeCheckingMode = "basic"
 reportMissingImports = false
@@ -115,12 +119,12 @@ version = "0.0.0"
 tag_format = "v$version"
 version_files = [
     "pyproject.toml:version",
-    "lukeburciu/aws_diagram_mcp_server/__init__.py:__version__"
+    "aws_diagram_mcp_server/__init__.py:__version__"
 ]
 update_changelog_on_bump = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["lukeburciu"]
+packages = ["aws_diagram_mcp_server"]
 
 [tool.bandit]
 # Skip specific issues
@@ -128,7 +132,7 @@ skips = ["B102"]
 exclude_dirs = ["venv","tests"]
 
 # Per-file skips
-per_file_skips = { "lukeburciu/aws_diagram_mcp_server/diagrams.py" = ["B102"] }
+per_file_skips = { "aws_diagram_mcp_server/diagrams_tools.py" = ["B102"] }
 
 [tool.pytest.ini_options]
 testpaths = "tests"
@@ -139,4 +143,4 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["lukeburciu"]
+source = ["aws_diagram_mcp_server"]

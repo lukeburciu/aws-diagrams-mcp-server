@@ -19,7 +19,7 @@
 import os
 import pytest
 import tempfile
-from lukeburciu.aws_diagram_mcp_server.models import (
+from aws_diagram_mcp_server.models import (
     DiagramExampleResponse,
     DiagramGenerateRequest,
     DiagramGenerateResponse,

@@ -16,7 +16,7 @@
 
 import pytest
 import tempfile
-from lukeburciu.aws_diagram_mcp_server.models import DiagramType
+from aws_diagram_mcp_server.models import DiagramType
 from typing import Dict, Generator
 
 

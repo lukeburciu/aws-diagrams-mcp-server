@@ -22,13 +22,13 @@ import os
 import re
 import signal
 import uuid
-from lukeburciu.aws_diagram_mcp_server.models import (
+from aws_diagram_mcp_server.models import (
     DiagramExampleResponse,
     DiagramGenerateResponse,
     DiagramIconsResponse,
     DiagramType,
 )
-from lukeburciu.aws_diagram_mcp_server.scanner import scan_python_code
+from aws_diagram_mcp_server.scanner import scan_python_code
 from typing import Optional
 
 
@@ -46,8 +46,8 @@ async def generate_diagram(
     You should use the `get_diagram_examples` tool first to get examples of how to use the `diagrams` package.
 
     This function accepts Python code as a string that uses the diagrams package DSL
-    and generates both PNG and DOT files without displaying them. The code is executed with
-    show=False and outformat=['png', 'dot'] to generate both formats.
+    and generates a PNG diagram without displaying it. The code is executed with
+    show=False to prevent automatic display.
 
     Supported diagram types:
     - AWS architecture diagrams
@@ -65,7 +65,7 @@ async def generate_diagram(
         workspace_dir: The user's current workspace directory. If provided, diagrams will be saved to a "generated-diagrams" subdirectory.
 
     Returns:
-        DiagramGenerateResponse: Response with paths to the generated PNG and DOT files and status
+        DiagramGenerateResponse: Response with the path to the generated diagram and status
     """
     # Scan the code for security issues
     scan_result = await scan_python_code(code)
@@ -264,10 +264,9 @@ from diagrams.aws.enduser import *
                 # Get the original arguments
                 original_args = match.strip()
 
-                # Check if parameters are already set
+                # Check if show parameter is already set
                 has_show = 'show=' in original_args
                 has_filename = 'filename=' in original_args
-                has_outformat = 'outformat=' in original_args
 
                 # Prepare new arguments
                 new_args = original_args
@@ -290,12 +289,6 @@ from diagrams.aws.enduser import *
                         new_args += ', '
                     new_args += 'show=False'
 
-                # Add outformat for both PNG and DOT if not already set
-                if not has_outformat:
-                    if new_args and not new_args.endswith(','):
-                        new_args += ', '
-                    new_args += "outformat=['png', 'dot']"
-
                 # Replace in the code
                 code = code.replace(f'with Diagram({original_args})', f'with Diagram({new_args})')
 
@@ -314,23 +307,13 @@ from diagrams.aws.enduser import *
         # Cancel the alarm
         signal.alarm(0)
 
-        # Check if the files were created
+        # Check if the file was created
         png_path = f'{output_path}.png'
-        dot_path = f'{output_path}.dot'
-
-        png_exists = os.path.exists(png_path)
-        dot_exists = os.path.exists(dot_path)
-
-        if png_exists:
-            message = f'Diagram generated successfully - PNG: {png_path}'
-            if dot_exists:
-                message += f', DOT: {dot_path}'
-
+        if os.path.exists(png_path):
             response = DiagramGenerateResponse(
                 status='success',
                 path=png_path,
-                dot_path=dot_path if dot_exists else None,
-                message=message,
+                message=f'Diagram generated successfully at {png_path}',
             )
 
             return response
